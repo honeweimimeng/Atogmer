@@ -10,13 +10,13 @@ import (
 const FileYaml = "/conf/cluster.yaml"
 
 type YamlConf struct {
-	name    string
+	Name    string
 	channel chanl.IOChannel
 }
 
 func (y *YamlConf) FromEnv() *YamlConf {
 	ser := &chanl.ChannelService{}
-	v := os.Getenv(y.name) + FileYaml
+	v := os.Getenv(y.Name) + FileYaml
 	y.channel = ser.FileChannel(v).Build()
 	return y
 }

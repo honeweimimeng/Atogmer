@@ -3,6 +3,7 @@ package conf
 type EngineConf struct {
 	path      string
 	ProtoName string `yaml:"proto"`
+	ConnType  string `yaml:"conn"`
 }
 
 func BuildConf(provider Provider) *EngineConf {
