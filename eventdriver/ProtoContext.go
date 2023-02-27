@@ -1,5 +1,6 @@
 package eventdriver
 
 type ProtoCtx struct {
-	bus *EventBus
+	bus   *EventBus
+	event Event
 }

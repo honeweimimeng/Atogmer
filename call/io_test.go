@@ -22,7 +22,7 @@ func TestFileIOChannel(t *testing.T) {
 }
 
 func TestDataConf(f *testing.T) {
-	yaml := (&YamlConf{name: "LITE_CLUSTER_ROOT"}).FromEnv()
+	yaml := (&YamlConf{Name: "LITE_CLUSTER_ROOT"}).FromEnv()
 	engine := conf.BuildConf(yaml)
 	println(engine.ProtoName)
 	println(engine.ConnType)
