@@ -7,6 +7,7 @@ type EventBus interface {
 }
 
 type CycleEventBus struct {
+	EventLooper
 }
 
 func (c *CycleEventBus) Publish(event Event) {
