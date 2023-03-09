@@ -19,11 +19,11 @@ func (n *NetDataBuf) Create() {
 	n.conn = conn
 }
 
-func (n *NetDataBuf) Writer() io.Writer {
+func (n *NetDataBuf) Writer0() io.Writer {
 	return n.conn
 }
 
-func (n *NetDataBuf) Reader() io.Reader {
+func (n *NetDataBuf) Reader0() io.Reader {
 	return n.conn
 }
 

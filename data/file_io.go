@@ -19,12 +19,12 @@ func (n *FileDataBuf) Remove() {
 	}
 }
 
-func (n *FileDataBuf) Writer() io.Writer {
+func (n *FileDataBuf) Writer0() io.Writer {
 	file := n.FileExitAndCreate()
 	return file
 }
 
-func (n *FileDataBuf) Reader() io.Reader {
+func (n *FileDataBuf) Reader0() io.Reader {
 	file, err := os.OpenFile(n.Path, os.O_RDONLY, 0666)
 	if err != nil {
 		return nil
