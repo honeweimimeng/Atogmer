@@ -11,16 +11,16 @@ func (w *Worker) doWork(task Task) {
 	}
 	go func() {
 		for {
-			if task != nil {
-				task.Run()
-			}
 			func() {
 				defer func() {
 					if r := recover(); r != nil {
-						w.pool.ExHandler(task.Ctx())
+						w.pool.ExHandler(task, r.(error))
 						return
 					}
 				}()
+				if task != nil {
+					task.Run()
+				}
 			}()
 			task = w.Next()
 		}
