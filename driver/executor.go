@@ -25,6 +25,10 @@ type ExecutorContext interface {
 	Interrupt() context.CancelFunc
 }
 
+type ExecutorCtxProcesses interface {
+	Process(ctx ExecutorContext)
+}
+
 type ExecutorDelegate struct {
 	exe    Executor
 	DeName string
