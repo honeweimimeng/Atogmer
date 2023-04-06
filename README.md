@@ -1,2 +1,4 @@
-# litecluster
-A neat solution for general purpose Go applications
+
+#### (liteCluster)
+- High performance cluster framework 🪶
+- OR Flexible event-driven framework 👣
