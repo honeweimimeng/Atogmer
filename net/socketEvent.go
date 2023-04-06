@@ -1,6 +1,8 @@
 package net
 
-import "litecluster/driver/event"
+import (
+	"litecluster/driver/event"
+)
 
 type READ struct {
 	id int

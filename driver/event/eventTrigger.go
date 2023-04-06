@@ -20,9 +20,8 @@ type TriggerManager struct {
 
 func NewTriggerManager(ctx driver.ExecutorContext) *TriggerManager {
 	res := &TriggerManager{
-		sel:  utils.NewMulti[[]Proto](ctx.Config().Name, ctx.Context(), ctx.Config().Logger),
-		ctx:  ctx,
-		hand: func(proto []Proto) {},
+		sel: utils.NewMulti[[]Proto](ctx.Config().Name, ctx.Context(), ctx.Config().Logger),
+		ctx: ctx,
 	}
 	return res
 }

@@ -2,6 +2,7 @@ package event
 
 import (
 	"context"
+	"fmt"
 	"litecluster/driver"
 )
 
@@ -83,4 +84,22 @@ func (c *Context) Context() context.Context {
 
 func (c *Context) Interrupt() context.CancelFunc {
 	return c.cancel
+}
+
+func FormatName(events []Proto) string {
+	res := ""
+	for _, e := range events {
+		res = fmt.Sprintf("%s[%s-%d]", res, e.Name(), e.Id())
+	}
+	return res
+}
+
+func FormatHandleName(handlers []Handler) string {
+	res := "event loop At "
+	for _, item := range handlers {
+		for _, e := range item.Events() {
+			res = fmt.Sprintf("%s[%s-%d]", res, e.Name(), e.Id())
+		}
+	}
+	return res
 }

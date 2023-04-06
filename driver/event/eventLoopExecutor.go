@@ -24,7 +24,7 @@ type LoopExecutor struct {
 
 func NewEventLoop(ctx driver.ExecutorContext, events []Handler) *LoopExecutor {
 	return &LoopExecutor{
-		name:    ctx.Config().Name,
+		name:    FormatHandleName(events),
 		events:  events,
 		context: ctx,
 		sel:     utils.NewMulti[driver.Executor](ctx.Config().Name, ctx.Context(), ctx.Config().Logger),
@@ -42,9 +42,10 @@ func (l *LoopExecutor) Name() string {
 }
 
 func (l *LoopExecutor) Execute() {
+	l.context.Config().Logger.Println(l.Name())
 	for _, item := range l.events {
 		l.sel.ChannelHandler(l.context.Group().Channel(item), func(ex driver.Executor) {
-			println("===>happen")
+			l.Context().Group().Join(ex)
 		})
 	}
 	l.sel.Start()

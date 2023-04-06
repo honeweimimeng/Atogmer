@@ -10,9 +10,7 @@ type ExecutorTask struct {
 }
 
 func (e *ExecutorTask) Run() {
-	e.Logger().Println("event executor task start, Name:", e.executor.Name())
 	e.executor.Execute()
-	e.Logger().Println("event executor task finish, Name:", e.executor.Name())
 }
 
 func (e *ExecutorTask) Ctx() context.Context {

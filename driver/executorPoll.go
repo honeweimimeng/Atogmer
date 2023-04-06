@@ -13,7 +13,7 @@ type ExecutorPoll struct {
 func NewExecutorPoll(c ExecutorContext) *ExecutorPoll {
 	res := &ExecutorPoll{
 		ctx:    c,
-		exJoin: make(chan Executor, c.Config().LoopCap),
+		exJoin: make(chan Executor, c.Config().ExecutorCap),
 		pool: &pool.DefaultPool{
 			Cap_:  c.Config().ExecutorCap,
 			Name_: c.Config().Name,
@@ -36,10 +36,12 @@ func (p *ExecutorPoll) Join(executor Executor) ExecutorGroup {
 
 func (p *ExecutorPoll) Execute() {
 	go func() {
-		select {
-		case ex := <-p.exJoin:
-			task := &ExecutorTask{executor: ex}
-			p.pool.Run(task)
+		for {
+			select {
+			case ex := <-p.exJoin:
+				task := &ExecutorTask{executor: ex}
+				p.pool.Run(task)
+			}
 		}
 	}()
 }

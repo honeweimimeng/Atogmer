@@ -39,7 +39,6 @@ type ExecutorProcess interface {
 }
 
 type ExecutorConfig struct {
-	LoopCap     uint32
 	ExecutorCap uint32
 	Name        string
 	Logger      logrus.StdLogger
@@ -47,7 +46,6 @@ type ExecutorConfig struct {
 
 func DefaultConfig() *ExecutorConfig {
 	return &ExecutorConfig{
-		LoopCap:     10,
 		ExecutorCap: 1000,
 		Name:        "exConfig0",
 		Logger:      logrus.New(),

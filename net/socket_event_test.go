@@ -11,5 +11,5 @@ func TestNormalSocketEvent(t *testing.T) {
 	ctx := event.Process(&Registry{}).LoadProperty(driver.DefaultConfig())
 	group := event.UseEventBus(ctx)
 	group.Execute()
-	time.Sleep(20 * time.Second)
+	time.Sleep(200 * time.Second)
 }
