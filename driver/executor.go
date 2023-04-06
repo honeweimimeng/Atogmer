@@ -11,49 +11,35 @@ type Executor interface {
 	Context() ExecutorContext
 }
 
-type ExecutorGroup interface {
-	Join(executor Executor)
-	AcceptExecutors() []Executor
-}
-
 type ExecutorContext interface {
 	Config() *ExecutorConfig
-	Boot() Executor
-	Context() context.Context
 	Group() ExecutorGroup
-	Channel(executor Executor) chan Executor
+	SetGroup(group ExecutorGroup)
+	Context() context.Context
 	Interrupt() context.CancelFunc
+	Process() ExecutorProcess
+	GroupRule() GroupRule
 }
 
-type ExecutorCtxProcesses interface {
-	Process(ctx ExecutorContext)
+type ExecutorGroup interface {
+	Join(executor Executor) ExecutorGroup
+	Execute()
+	Channel(executor Executor) chan Executor
 }
 
-type ExecutorDelegate struct {
-	exe    Executor
-	DeName string
-	Ctx    ExecutorContext
+type GroupRule interface {
+	Strategy(executors []Executor) []Executor
+	Provide(group ExecutorGroup, exes []Executor)
 }
 
-func (de *ExecutorDelegate) Name() string {
-	if de.exe == nil {
-		return de.DeName
-	}
-	return de.exe.Name()
-}
-
-func (de *ExecutorDelegate) Execute() {
-	de.exe.Execute()
-}
-
-func (de *ExecutorDelegate) Context() ExecutorContext {
-	if de.exe == nil {
-		return de.Ctx
-	}
-	return de.exe.Context()
+type ExecutorProcess interface {
+	Context(ctx ExecutorContext)
+	Process(executor Executor)
+	Group(group ExecutorGroup)
 }
 
 type ExecutorConfig struct {
+	LoopCap     uint32
 	ExecutorCap uint32
 	Name        string
 	Logger      logrus.StdLogger
@@ -61,6 +47,7 @@ type ExecutorConfig struct {
 
 func DefaultConfig() *ExecutorConfig {
 	return &ExecutorConfig{
+		LoopCap:     10,
 		ExecutorCap: 1000,
 		Name:        "exConfig0",
 		Logger:      logrus.New(),

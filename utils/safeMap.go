@@ -5,7 +5,7 @@ type SafeMap[K, V any] struct {
 	core    map[any]V
 }
 
-func UseInterSafeMap[K any, V any]() *SafeMap[K, V] {
+func NewSafeMap[K any, V any]() *SafeMap[K, V] {
 	m := &SafeMap[K, V]{
 		channel: make(chan *KVEntry[K, V]),
 		core:    make(map[any]V),

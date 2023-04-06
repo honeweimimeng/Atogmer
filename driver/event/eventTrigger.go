@@ -1,46 +1,53 @@
 package event
 
+import (
+	"litecluster/driver"
+	"litecluster/utils"
+)
+
 type Trigger interface {
-	AcceptEvent() []AcceptableEvent
-	Channel() chan Trigger
+	AcceptEvents(ch chan []Proto)
 	Next() Trigger
 	Child(trigger Trigger)
-	Await()
 }
 
 type TriggerManager struct {
-	directEvent []AcceptableEvent
-	resChannel  chan []AcceptableEvent
-	next        Trigger
+	ctx  driver.ExecutorContext
+	next Trigger
+	sel  *utils.MultiCaseSel[[]Proto]
+	hand func(proto []Proto)
 }
 
-func UseTriggerManager() *TriggerManager {
-	return &TriggerManager{
-		resChannel: make(chan []AcceptableEvent),
+func NewTriggerManager(ctx driver.ExecutorContext) *TriggerManager {
+	res := &TriggerManager{
+		sel:  utils.NewMulti[[]Proto](ctx.Config().Name, ctx.Context(), ctx.Config().Logger),
+		ctx:  ctx,
+		hand: func(proto []Proto) {},
 	}
+	return res
 }
 
-func (m *TriggerManager) AcceptEvent() []AcceptableEvent {
-	if m.directEvent != nil {
-		return m.directEvent
-	}
-	m.Await()
-	return <-m.resChannel
-}
-
-func (m *TriggerManager) Await() {
+func (m *TriggerManager) listenEvent() *TriggerManager {
 	go func() {
-		for {
-			select {
-			case r := <-m.Channel():
-				m.resChannel <- r.AcceptEvent()
-			}
+		for i := m.Next(); i != nil; i = i.Next() {
+			chItem := make(chan []Proto)
+			go i.AcceptEvents(chItem)
+			m.sel.ChannelHandler(chItem, func(proto []Proto) {
+				m.hand(proto)
+			})
 		}
+		m.sel.Start()
 	}()
+	return m
 }
 
-func (m *TriggerManager) Channel() chan Trigger {
-	return m.next.Channel()
+func (m *TriggerManager) AcceptEvents(ch chan []Proto) {
+	m.listenEvent()
+	if m.hand == nil {
+		m.hand = func(proto []Proto) {
+			ch <- proto
+		}
+	}
 }
 
 func (m *TriggerManager) Next() Trigger {
@@ -48,5 +55,6 @@ func (m *TriggerManager) Next() Trigger {
 }
 
 func (m *TriggerManager) Child(trigger Trigger) {
+	trigger.Child(m.next)
 	m.next = trigger
 }

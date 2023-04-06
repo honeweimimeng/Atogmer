@@ -75,7 +75,7 @@ func (sel *MultiCaseSel[T]) Start() {
 		chosen, val, ok := reflect.Select(sel.cases)
 		dir := sel.cases[chosen].Dir
 		if o := dir == reflect.SelectSend || dir == reflect.SelectDefault; ok || o {
-			v, bre := sel.CovetT(ok, val)
+			v, bre := sel.covetT(ok, val)
 			if bre {
 				return
 			}
@@ -87,7 +87,7 @@ func (sel *MultiCaseSel[T]) Start() {
 	}
 }
 
-func (sel *MultiCaseSel[T]) CovetT(isRec bool, val reflect.Value) (T, bool) {
+func (sel *MultiCaseSel[T]) covetT(isRec bool, val reflect.Value) (T, bool) {
 	defer func() {
 		if r := recover(); r != nil && isRec {
 			sel.Logger.Fatal("unexpect data type in select ", sel.Name)
