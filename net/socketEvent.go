@@ -1,7 +1,7 @@
 package net
 
 import (
-	"atogmer/driver/event"
+	"github.com/honeweimimeng/atogmer/driver/event"
 )
 
 type READ struct {

@@ -1,9 +1,9 @@
 package event
 
 import (
-	"atogmer/driver"
 	"context"
 	"fmt"
+	"github.com/honeweimimeng/atogmer/driver"
 )
 
 type Context struct {

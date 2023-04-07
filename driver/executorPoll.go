@@ -1,7 +1,7 @@
 package driver
 
 import (
-	"atogmer/utils/pool"
+	"github.com/honeweimimeng/atogmer/utils/pool"
 )
 
 type ExecutorPoll struct {

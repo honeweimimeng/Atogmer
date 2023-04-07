@@ -1,4 +1,4 @@
-module atogmer
+module github.com/honeweimimeng/atogmer
 
 go 1.19
 

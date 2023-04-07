@@ -1,8 +1,8 @@
 package net
 
 import (
-	"atogmer/driver"
-	"atogmer/driver/event"
+	"github.com/honeweimimeng/atogmer/driver"
+	"github.com/honeweimimeng/atogmer/driver/event"
 	"testing"
 	"time"
 )

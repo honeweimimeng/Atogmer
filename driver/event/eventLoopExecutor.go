@@ -1,8 +1,8 @@
 package event
 
 import (
-	"atogmer/driver"
-	"atogmer/utils"
+	"github.com/honeweimimeng/atogmer/driver"
+	"github.com/honeweimimeng/atogmer/utils"
 )
 
 type Proto interface {

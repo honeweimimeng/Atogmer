@@ -1,6 +1,6 @@
 package event
 
-import "atogmer/driver"
+import "github.com/honeweimimeng/atogmer/driver"
 
 type DefaultLoopStrategy struct {
 	result []driver.Executor
