@@ -1,8 +1,8 @@
 package net
 
 import (
-	"litecluster/driver"
-	"litecluster/driver/event"
+	"Atogmer/driver"
+	"Atogmer/driver/event"
 	"time"
 )
 

@@ -1,15 +1,14 @@
 package net
 
 import (
-	"litecluster/driver"
-	"litecluster/driver/event"
+	"Atogmer/driver"
+	"Atogmer/driver/event"
 	"testing"
 	"time"
 )
 
 func TestNormalSocketEvent(t *testing.T) {
 	ctx := event.Process(&Registry{}).LoadProperty(driver.DefaultConfig())
-	group := event.UseEventBus(ctx)
-	group.Execute()
+	event.UseEventBus(ctx).Execute()
 	time.Sleep(200 * time.Second)
 }

@@ -1,7 +1,7 @@
 package net
 
 import (
-	"litecluster/driver/event"
+	"Atogmer/driver/event"
 )
 
 type READ struct {

@@ -1,4 +1,4 @@
-module litecluster
+module Atogmer
 
 go 1.19
 
