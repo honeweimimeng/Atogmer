@@ -1,8 +1,8 @@
 package net
 
 import (
-	"Atogmer/driver"
-	"Atogmer/driver/event"
+	"atogmer/driver"
+	"atogmer/driver/event"
 	"time"
 )
 

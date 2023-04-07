@@ -1,4 +1,4 @@
-module Atogmer
+module atogmer
 
 go 1.19
 

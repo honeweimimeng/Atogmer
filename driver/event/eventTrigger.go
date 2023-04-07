@@ -1,8 +1,8 @@
 package event
 
 import (
-	"Atogmer/driver"
-	"Atogmer/utils"
+	"atogmer/driver"
+	"atogmer/utils"
 )
 
 type Trigger interface {
