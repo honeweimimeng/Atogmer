@@ -42,12 +42,12 @@ func (l *LoopExecutor) Name() string {
 }
 
 func (l *LoopExecutor) Execute() {
-	l.context.Config().Logger.Println(l.Name())
 	for _, item := range l.events {
 		l.sel.ChannelHandler(l.context.Group().Channel(item), func(ex driver.Executor) {
 			l.Context().Group().Join(ex)
 		})
 	}
+	l.context.Config().Logger.Println(l.Name())
 	l.sel.Start()
 }
 

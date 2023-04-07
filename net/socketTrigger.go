@@ -25,6 +25,7 @@ type EpollTrigger struct {
 }
 
 func (e *EpollTrigger) AcceptEvents(ch chan []event.Proto) {
+	ch <- []event.Proto{&READ{id: 0}}
 	e.once.Do(e.Listener)
 }
 

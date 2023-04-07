@@ -25,6 +25,7 @@ type ExecutorGroup interface {
 	Join(executor Executor) ExecutorGroup
 	Execute()
 	Channel(executor Executor) chan Executor
+	WaitFinish() bool
 }
 
 type GroupRule interface {

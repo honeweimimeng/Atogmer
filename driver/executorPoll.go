@@ -2,12 +2,14 @@ package driver
 
 import (
 	"github.com/honeweimimeng/atogmer/utils/pool"
+	"sync"
 )
 
 type ExecutorPoll struct {
 	exJoin chan Executor
 	ctx    ExecutorContext
 	pool   pool.Pool
+	wait   sync.WaitGroup
 }
 
 func NewExecutorPoll(c ExecutorContext) *ExecutorPoll {
@@ -25,11 +27,17 @@ func NewExecutorPoll(c ExecutorContext) *ExecutorPoll {
 	return res
 }
 
+func (p *ExecutorPoll) WaitFinish() bool {
+	p.wait.Wait()
+	return true
+}
+
 func (p *ExecutorPoll) Channel(executor Executor) chan Executor {
 	return nil
 }
 
 func (p *ExecutorPoll) Join(executor Executor) ExecutorGroup {
+	p.wait.Add(1)
 	p.exJoin <- executor
 	return p
 }
@@ -39,6 +47,7 @@ func (p *ExecutorPoll) Execute() {
 		for {
 			select {
 			case ex := <-p.exJoin:
+				p.wait.Done()
 				task := &ExecutorTask{executor: ex}
 				p.pool.Run(task)
 			}

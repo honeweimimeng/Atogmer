@@ -34,6 +34,11 @@ func UseEventBus(ctx driver.ExecutorContext) *Bus {
 	return res
 }
 
+func (b *Bus) WaitFinish() bool {
+	b.group.WaitFinish()
+	return true
+}
+
 func (b *Bus) Join(executor driver.Executor) driver.ExecutorGroup {
 	return b.group.Join(executor)
 }
@@ -44,17 +49,19 @@ func (b *Bus) Execute() {
 }
 
 func (b *Bus) startEventLoop(executors []driver.Executor) {
-	b.trigger.AcceptEvents(b.adviceCh)
-	b.ctx.GroupRule().Provide(b.ctx.Group(), executors)
-	go func() {
-		for {
-			select {
-			case acceptedEvents := <-b.adviceCh:
-				b.processEvents(acceptedEvents)
-				break
+	if b.WaitFinish() {
+		b.trigger.AcceptEvents(b.adviceCh)
+		b.ctx.GroupRule().Provide(b.ctx.Group(), executors)
+		go func() {
+			for {
+				select {
+				case acceptedEvents := <-b.adviceCh:
+					b.processEvents(acceptedEvents)
+					break
+				}
 			}
-		}
-	}()
+		}()
+	}
 }
 
 func (b *Bus) registerEventHandler(handler Handler) *Bus {
