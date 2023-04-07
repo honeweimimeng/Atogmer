@@ -1,6 +1,6 @@
 ![](https://raw.githubusercontent.com/honeweimimeng/liteCluster/master/icons/atogmer.jpg)
 #### (liteCluster)
-![](https://raw.githubusercontent.com/honeweimimeng/liteCluster/master/icons/progress-25%-yellow.jpg)
+![](https://raw.githubusercontent.com/honeweimimeng/liteCluster/master/icons/progress-25%25-yellow.jpg?raw=true)
 ![](https://raw.githubusercontent.com/honeweimimeng/liteCluster/master/icons/netpoll-Complete-green.jpg)
 ![](https://raw.githubusercontent.com/honeweimimeng/liteCluster/master/icons/datastruct-inprogress-yellowgreen.jpg)
 ![](https://raw.githubusercontent.com/honeweimimeng/liteCluster/master/icons/cluster-inprogress-yellowgreen.jpg)
